@@ -62,6 +62,19 @@ Session Overview:
   2. Copy and save the  ``` client-config.example.js ``` file in the env folder as ``` client-config.js ```.
   3. Enter and save your Client ID and App Key in the ``` client-config.js ``` file.
 
+#### Database setup
+
+  1. Start database 
+
+    ```
+    $ mysql.server start
+    ```
+  2. Create database
+
+    ```
+    > CREATE DATABASE sentimize;
+    ```
+    
 #### 4. Run the application
 
   1. Create a build folder within client/build. From within the root directory run the following command to make sure Browserify builds the bundle file and rebuilds on every change with Watchify:

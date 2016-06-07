@@ -32,7 +32,7 @@ export default class HomeView extends React.Component {
     return (
       <div className="view home-view">
         <div className="home-view-message">Hello, <span ref="firstName"></span>.</div>
-        <h4 className="home-view-welcome">Welcome to sentimize.</h4>
+        <h4 className="home-view-welcome">Welcome to masterfully.</h4>
         <div className="home-view-instruction">To begin a new video session, click on <span className="instruction-highlight"><Link to="/record">Record</Link></span>.</div>
         <div className="home-view-instruction">To see reports for all past sessions, click on <span className="instruction-highlight"><Link to="/sessions">Sessions</Link></span>.</div>
         <div className="home-view-instruction"></div>

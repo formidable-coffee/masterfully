@@ -60,7 +60,7 @@ export default class RecordView extends React.Component {
     var intervalId = setInterval(function() {
       FACE.webcam.takePicture('webcam', 'current-snapshot');
       this._takeSnapshot();
-    }.bind(this), 1000);
+    }.bind(this), 5000);
 
     this.setState({ intervalId: intervalId, startTime: Date.now() });
   }
@@ -155,6 +155,7 @@ export default class RecordView extends React.Component {
 
         </div>
         <div className="pure-u-1-3 record-form">
+          <button type='button' onClick={this._createNewSession.bind(this)} className="record-form-button pure-button pure-input-1-2 pure-button-primary">Start Recording</button>
           <RecordInstructions clicked={this._createNewSession.bind(this)}/>
           { this.state.showQuestions ? <RecordQuestions clicked={this._endSession.bind(this)}/> : null }
         </div>
