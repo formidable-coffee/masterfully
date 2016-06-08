@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import FACE from './../../lib/FACE-1.0.js';
 import env from './../../../env/client-config.js';
-import RecordInstructions from './record-instructions.jsx';
+import RecordInstructions from '../setup-view/record-instructions.jsx';
 import RecordQuestions from './record-questions.jsx';
 
 export default class RecordView extends React.Component {

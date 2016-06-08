@@ -10,21 +10,24 @@ class Setup extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      allSessions: []
+      allPractices: [' '], 
+      allQuestions: [],
+      practiceId: null
     }
   }
 
-  componentDidMount () {
-    this.getAllSessions(); 
+  componentWillMount () {
+    this.getAllPractices(); 
   }
-  //post data from setup form to database
-  //on success redirect to record page
-  getAllSessions () {
+
+  getAllPractices () {
     $.ajax({
       type: 'GET',
       url: 'api/practice',
       sucesss: function(data) {
-        this.state.allSessions = data; 
+        if (data) {
+          this.setState({allPractices : data}); 
+        }
       },
       error: function (error) {
         console.log('error in getting practices from DB', error); 
@@ -32,11 +35,33 @@ class Setup extends React.Component {
     }); 
   }
 
+  selectPractice (val) {
+    console.log(val); 
+    $.ajax({
+      type: 'GET',
+      url: '/practice',
+      data: val,
+      success: (data) => {
+        this.setState({practiceId: data.id}); 
+      }
+    })
+  }
+
+  saveQuestions (e, index) {
+    console.log(e.target.value); 
+    //editing questions and keys
+    this.state.allQuestions[index] = e.target.value;
+    console.log('allQs', this.state.allQuestions); 
+  }
+
   formSubmit () {
     var formData = {
+      // add logic for setting this data by dropdown or by form fields
      title: $('.record-title')[0].value,
      subject: $('.record-subject')[0].value,
      description: $('.record-description')[0].value,
+     questions: this.state.allQuestions,
+     practiceId: this.state.practiceId
     }
 
     $.ajax({
@@ -45,7 +70,7 @@ class Setup extends React.Component {
       data: formData,
       success: function(newPractice) {
         console.log('New Session: ' + newPractice.id);
-        browserHistory.push('record'); 
+        browserHistory.push('/record/' + this.state.practiceId.toString()); 
       }.bind(this),
       error: function(error) {
         console.error('practice creation error', error)
@@ -54,23 +79,20 @@ class Setup extends React.Component {
     });
   }
 
-  selectPractice (e) {
-    practice = e.target.value;
-    //save current practice to main? 
-  }
+  
 
   render () {
     return (
       <div className='setup'>
         <h2> Use existing practice </h2>
         <select onChange={this.selectPractice.bind(this)}> 
-          {this.state.allSessions.map(function (val) {
-            return (<option value={val}>val</option>)
+          {this.state.allPractices.map(function (val) {
+            return (<option value={val}>{val}</option>)
           })}
         </select>
         <h2> Create new practice </h2>
         <SetupForm formSubmit={this.formSubmit.bind(this)}/>
-        <QuestionForm />
+        <QuestionForm saveQuestions={this.saveQuestions.bind(this)}/>
         <button onClick={this.formSubmit.bind(this)}>Start practicing!</button>
       </div>
     )

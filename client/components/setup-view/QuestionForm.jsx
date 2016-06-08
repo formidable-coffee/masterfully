@@ -5,21 +5,20 @@ class QuestionForm extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      inputNum = 3, 
-      inputs = []
+      inputs: [1, 2, 3]
     }
   }
 
   render () {
-  return (
+    return (
       <div>
-        {this.state.inputs.map(function(num) {
-          <QuestionEntry key={num}/>
-        })}
-        <button onClick={() => {this.inputs.push(inputNum++)}}> + </button>
+        {this.state.inputs.map(
+           (val) => <QuestionEntry key={val} saveQuestions={this.props.saveQuestions}/>
+        )} 
+        <button onClick={() => {this.setState({inputs: this.state.inputs.concat([this.state.inputs.length++])})}}> + </button>
       </div>
     ); 
-  }
+  };
 }
 
-export default QuestionForm; 
+export default QuestionForm;
